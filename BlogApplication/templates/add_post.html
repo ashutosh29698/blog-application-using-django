@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row mt-3">
+        <div class="col-md-8 col-lg-8 col-12 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="text-center">Add New Post</h4>
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'add_post' %}" method="POST"
+                        enctype="multipart/form-data"
+                    >
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="title" class="font-weight-bold">Title</label>
+                            {{ form.title }}
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label for="description" class="font-weight-bold">
+                                Description
+                            </label>
+                            {{ form.description }}
+                        </div>
+                        <div class="form-group">
+                            <label for="image" class="font-weight-bold">
+                                Add image
+                            </label>
+                            {{ form.image }}
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            {{ form.is_public }}
+                            <label for="">Post as public</label>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-outline-info px-5 d-block mx-auto">
+                                POST
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

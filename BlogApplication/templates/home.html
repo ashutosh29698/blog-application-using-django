@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% for message in messages %}
+        <div class="alert alert-warning">
+            <p class="text-dark">{{ message }}</p>
+        </div>
+    {% endfor %}
+
+    <div class="row">
+        <!-- public posts -->
+        <div class="col-md-9">
+            {% if public_posts %}
+                <p class="lead text-center mt-2">
+                    PUBLIC POSTS
+                    {% if search_for %}
+                        OF {{ search_for }}
+                    {% endif %}
+                </p>
+
+            {% endif %}
+            
+            {% for post in public_posts %}
+            <a href="{% url 'detail' post.id %}" 
+                class="text-dark"
+            style="text-decoration: none;">
+                <div class="card mt-2">
+                    
+                    <p class="card-header font-weight-bold">{{ post.title }}</p>
+                    
+                    <div class="card-body">
+                        <p class="card-text">
+                            {{ post.description | truncatechars:300 }}
+                        </p>
+                    </div>
+                </div>
+            </a>
+            {% empty %}
+                <h1 class="text-center mt-5 lead display-4">No public posts available</h1>
+            {% endfor %}
+        </div>
+
+
+        <!-- private posts -->
+        <div class="col-md-3 col-lg-3">
+            <div class="mt-2">
+                {% if public_posts %}
+                    <p class="lead text-center">PRIVATE POSTS</p>
+                {% endif %}
+                
+
+                <div class="list-group">
+                    {% for post in private_posts %}
+                        <a href="{% url 'edit' post.id %}" class="list-group-item list-group-item-action text-center">
+                            {{ post.title | truncatechars:20 }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="card my-5">
+        <h4 class="card-header text-center">
+            {{ post.title }}
+            <br>
+            <small class="text-muted">author: {{ post.user.username }}</small>
+            <br>
+            <small class="text-muted">posted on : {{ post.date_posted | date }}</small>
+        </h4>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 col-12">
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}" 
+                        style="height: 20rem; width: 20rem;"
+                        alt="" class="img-fluid img-thumbnail bg-dark">
+                    {% endif %}
+                </div>
+                <div class="col-md-8 col-12">
+                    <p class="lead">{{ post.description }}</p>
+                </div>
+            </div>
+        </div>
+        {% if post.user == user %}
+            <div class="card-footer">
+                <a href="{% url 'delete' post.id %}" class="btn btn-outline-danger mx-auto d-block">Delete Post</a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock content %}

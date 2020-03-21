@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    
+    {% for message in messages %}
+        <div class="alert alert-danger" role="alert" style="z-index: 2000;">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="row align-items-center flex-row" style="height: 90vh;">
+        <div class="col-md-6 col-lg-6">
+            <p class="lead text-center">
+                LOGIN 
+                <div class="bg-dark mx-auto" style="height: 1px; width: 50%;"></div>
+            </p>
+            
+            
+            <form action="{% url 'login' %}" method="POST">
+                {% csrf_token %}
+                
+                <div class="form-group mt-5">
+                    <label for="username" class="font-weight-bold">Username</label>
+                    {{ loginform.username }}
+                    <small class="text-danger">{{ loginform.username.errors | striptags }}</small>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="font-weight-bold">Password</label>
+                    {{ loginform.password }}
+                    <small class="text-danger">{{ loginform.password.errors | striptags }}</small>
+                    {% for fiels,err_message in loginform.errors.items %}
+                        <small class="text-danger">{{ err_message| striptags }}</small>
+                    {% endfor %}
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-danger mx-auto px-5 d-block">Login</button>
+                </div>
+                
+            </form>
+        </div>
+        <div class="col-1 d-none d-md-block">
+            <div class="row">
+                <div class="col-6" style="height: 60vh; border-right: 2px solid black ;">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 col-lg-5">
+            <p class="lead text-center">
+                CREATE ACCOUNT
+                <div class="bg-dark mx-auto" style="height: 1px; width: 50%;"></div>
+            </p>
+            
+            <form action="{% url 'index' %}" method="POST" id="myForm">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username" class="font-weight-bold">Username</label>
+                    {{ form.username }}
+                    <small class="text-danger">{{ form.username.errors | striptags }}</small>
+                </div>
+                <div class="form-group">
+                    <label for="password1" class="font-weight-bold">Password</label>
+                    {{ form.password1 }}
+                    <small class="text-danger">{{ form.password1.errors | striptags }}</small>
+                </div>
+                <div class="form-group">
+                    <label for="password2" class="font-weight-bold">Confirm Password</label>
+                    {{ form.password2 }}
+                    <small class="text-danger">{{ form.password2.errors | striptags }}</small>
+                </div>
+                <div class="form-group">
+                    
+                    <label for="" class="font-weight-bold">{{ form.num1 }} + {{ form.num2 }}</label>
+                    {{ form.captha }}
+                    <small class="text-danger">{{ form.captha.errors | striptags }}</small>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success px-5 mx-auto d-block" id="submit">Login</button>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+{% endblock content %}
