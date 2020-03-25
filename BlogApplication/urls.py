@@ -31,6 +31,7 @@ urlpatterns = [
     path('detail/<int:id>/',blog_view.show_details, name='detail'),
     path('edit/<int:id>/',blog_view.make_public, name='edit'),
     path('delete/<int:id>/',blog_view.delete_post, name='delete'),
+    path('delete_comment/<int:comment_id>/<int:post_id>/', blog_view.delete_comment, name='delete_comment'),
     path('login/',user_views.login,name='login'),
     path('logout/',auth_views.LogoutView.as_view(),name='logout'),
     path('',user_views.index, name='index'),

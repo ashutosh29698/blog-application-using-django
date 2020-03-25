@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .forms import PostForm
-from .models import Post
+from .forms import PostForm, CommentForm
+from .models import Post, Comments
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.http import HttpResponse
@@ -24,11 +24,28 @@ def home(request):
                                             'public_posts': public_posts,
                                             'private_posts': private_posts
                                         })
-@login_required
+
 def show_details(request,id):
     # shows detail of specified post id
     post = Post.objects.get(pk=id)
-    return render(request,"detail.html",{'post': post})
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if(form.is_valid()):
+            cd = form.cleaned_data
+            comment = cd['comment']
+            obj = Comments(post = post, commented_by = request.user, comment = comment)
+            obj.save()
+    else:
+        form = CommentForm()
+    return render(request,"detail.html",{'post': post, 'form': form})
+
+@login_required
+def delete_comment(request, comment_id, post_id):
+    comment = Comments.objects.get(id = comment_id)
+    post = Post.objects.get(pk=post_id)
+    comment.delete()
+    # return redirect(request,"detail.html",{'post': post, 'form': form})
+    return redirect('detail', id=post_id)
 
 @login_required
 def make_public(request, id):
