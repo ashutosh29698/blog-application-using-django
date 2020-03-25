@@ -18,3 +18,6 @@ class Comments(models.Model):
     commented_by = models.ForeignKey(User, on_delete=models.CASCADE)
     date_commented = models.DateTimeField(auto_now_add=True)
     comment = models.TextField()
+
+    class Meta:
+        ordering = ['-date_commented']

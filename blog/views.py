@@ -28,6 +28,7 @@ def home(request):
 def show_details(request,id):
     # shows detail of specified post id
     post = Post.objects.get(pk=id)
+    
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if(form.is_valid()):
