@@ -101,7 +101,7 @@ def add_post(request):
                 image = request.FILES['image']
             else:
                 image = ''
-            post.image = image
+            
             post = Post(user=request.user, 
                         title=cd.get('title'),
                         description = cd.get('description'),
